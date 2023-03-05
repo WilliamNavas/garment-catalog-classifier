@@ -1,4 +1,4 @@
-# garment-catalog-classifier
+# GARMENT-CATALOG-CLASSIFIER
 Clasificador de prendas en base al entrenamiento del modelo que proyecte la imagen de la prenda predicha y la prenda real 
 # Introducción 
 Fashion-MNIST es un conjunto de datos de imágenes de moda que contiene 70,000 imágenes en escala de grises de 28x28 píxeles, con 60,000 imágenes de entrenamiento y 10,000 imágenes de prueba. Cada imagen está etiquetada con una de las 10 clases posibles.
@@ -27,7 +27,9 @@ Una vez que descargue los archivos, puede cargar los datos utilizando las biblio
 # Clonar el repositorio de GitHub de Fashion-MNIST 
 Otra opción para obtener los datos del conjunto de datos. Este repositorio incluye tanto el conjunto de datos de entrenamiento como el de prueba en la carpeta "data/fashion", y también proporciona algunos scripts útiles para la evaluación comparativa y visualización de los resultados de aprendizaje automático.Para clonar el repositorio, debe tener instalado Git en su sistema. 
 
+```
 git clone git@github.com:zalandoresearch/fashion-mnist.git
+```
 
 Esto descargará todo el repositorio en su directorio de trabajo actual. Luego, puede acceder a la carpeta de datos y utilizar los archivos de datos en su proyecto de aprendizaje automático.
 Es importante tener en cuenta que clonar el repositorio es una buena opción si también está interesado en explorar otros aspectos del conjunto de datos, como los detalles de la implementación y la evaluación comparativa. Si solo está interesado en obtener los datos para usar en su proyecto de aprendizaje automático, es posible que desee considerar otras opciones, como el uso de bibliotecas de ML o la descarga directa.
@@ -37,16 +39,16 @@ Cada ejemplo en el conjunto de datos Fashion-MNIST se asigna a una de las siguie
 
 | Etiqueta | Descripción | 
 |:--------------|:-------------:|
-| 0| Camiseta  | 
-| 1 | Pantalón | 
-| 2 | Jersey | 
-| 3 | Vestido  | 
-| 4 | Abrigo  | 
-| 5 | Sandalia  | 
-| 6 | Camisa  | 
+| 0| T-shirt/top  | 
+| 1 | Trouser | 
+| 2 | Pullover | 
+| 3 | Dress  | 
+| 4 | Coat  | 
+| 5 | Sandal | 
+| 6 | Shirt  | 
 | 7| Sneaker  | 
-| 8 | Bolsa  | 
-| 9 | Botín  |
+| 8 | Bag  | 
+| 9 | Ankle boot  |
 
 Estas etiquetas se utilizan para identificar la clase de cada imagen de moda en el conjunto de datos. Es importante tener en cuenta que el objetivo del conjunto de datos es permitir a los investigadores evaluar algoritmos de aprendizaje automático para la clasificación de imágenes de moda en diez categorías diferentes. Por lo tanto, es importante utilizar estas etiquetas para evaluar la precisión de los modelos de aprendizaje automático en la tarea de clasificación de imágenes de moda.
 
@@ -77,7 +79,7 @@ La tercera línea normaliza los valores de los píxeles de x_train dividiéndolo
 
 La normalización de los valores de los píxeles en un rango de 0 a 1 puede ayudar a mejorar la eficacia del modelo, ya que asegura que todos los datos de entrada se encuentren en la misma escala.
 
-# Definir el modelado de la prediccion 
+# Definir el modelado de la predicción 
 
 ```
 model=Sequential()
@@ -165,7 +167,7 @@ El método predict toma el conjunto de datos de prueba de entrada y devuelve las
 
 Este código utiliza el modelo previamente entrenado para hacer predicciones sobre el conjunto de datos de prueba y almacena los resultados en la variable predictions.
 
-# Clasificacion de prendas y visualización de prendas erroneas  
+# Clasificación de prendas y visualización de prendas erroneas  
 
 ```
     import matplotlib.pyplot as plt
