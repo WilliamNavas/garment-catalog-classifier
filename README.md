@@ -207,3 +207,8 @@ plt.title(): Este método agrega un título a la imagen que muestra la prenda re
 plt.imshow(): Este método muestra la imagen actual en la subtrama actual.
 
 Este código muestra visualmente algunas de las predicciones erróneas que hizo el modelo, junto con la prenda real y la prenda predicha por el modelo. Se utiliza la biblioteca Matplotlib para crear una cuadrícula de imágenes para mostrar las predicciones erróneas.
+
+<img width="164" alt="Captura 1" src="https://user-images.githubusercontent.com/126996071/222946476-3d0cae42-253c-459c-9b54-e650ff5be091.PNG">
+<img width="178" alt="Captura 2" src="https://user-images.githubusercontent.com/126996071/222946477-50028c76-8c23-48ed-89ab-a88d30133d5c.PNG">
+<img width="183" alt="Captura 3" src="https://user-images.githubusercontent.com/126996071/222946479-41c264cd-6615-43ae-88ad-4b73ed274213.PNG">
+<img width="181" alt="Captura 4" src="https://user-images.githubusercontent.com/126996071/222946480-f3f14a44-119a-43ce-a643-20a6913ea2f7.PNG">
