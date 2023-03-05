@@ -60,7 +60,7 @@ Es importante tener en cuenta que este código requiere que la biblioteca NumPy 
 
 En el código, x_train y y_train contienen las imágenes y las etiquetas del conjunto de datos de entrenamiento, respectivamente, y x_test e y_test contienen las imágenes y las etiquetas del conjunto de datos de prueba, respectivamente. La función load_mnist toma dos argumentos: la ruta al directorio que contiene los archivos de datos del conjunto de datos Fashion-MNIST (data/fashion en este caso), y el tipo de conjunto de datos que se va a cargar ('train' para el conjunto de datos de entrenamiento y 't10k' para el conjunto de datos de prueba).
 
-# convertimos los datos y normalizamos 
+# Convertimos los datos y normalizamos 
 
 ```
 x_train = x_train.astype ('float32')
@@ -77,3 +77,133 @@ La tercera línea normaliza los valores de los píxeles de x_train dividiéndolo
 
 La normalización de los valores de los píxeles en un rango de 0 a 1 puede ayudar a mejorar la eficacia del modelo, ya que asegura que todos los datos de entrada se encuentren en la misma escala.
 
+# Definir el modelado de la prediccion 
+
+```
+model=Sequential()
+model.add(Conv2D(32, kernel_size=(3,3),
+                activation = 'relu',
+                input_shape=input_shape))
+model.add(Conv2D(64, (3,3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2,2)))
+model.add(Dropout(0.25))
+model.add(Flatten())
+model.add(Dense(128, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(num_classes, activation='softmax'))
+```
+
+El código define un modelo de red neuronal convolucional (CNN) utilizando la API secuencial de Keras. El modelo consta de varias capas:
+
+La primera capa es una capa convolucional con 32 filtros de tamaño 3x3 y función de activación ReLU. La entrada es una imagen con la forma especificada por input_shape.
+
+La segunda capa es otra capa convolucional con 64 filtros de tamaño 3x3 y función de activación ReLU.
+
+La tercera capa es una capa de agrupación máxima (max pooling) con un tamaño de ventana de 2x2.
+
+La cuarta capa es una capa de abandono (dropout) con una tasa de abandono del 25%.
+
+La quinta capa es una capa de aplanamiento (flatten) que convierte la salida de la capa anterior en un vector unidimensional.
+
+La sexta capa es una capa densa (fully connected) con 128 neuronas y función de activación ReLU.
+
+La séptima capa es otra capa de abandono con una tasa de abandono del 50%.
+
+La octava y última capa es una capa densa con un número de neuronas igual al número de clases num_classes y función de activación softmax. Esta capa produce la salida final del modelo, que es una distribución de probabilidad sobre las posibles clases.
+
+Este modelo es una CNN con dos capas convolucionales, una capa de agrupación máxima, dos capas de abandono, dos capas densas y una capa de salida con activación softmax.
+
+# Entrenamos el modelo 
+
+```
+model.fit(x_train, y_train, batch_size=64, epochs=10, validation_split=0.1)
+```
+
+El código entrena el modelo previamente compilado utilizando el método fit de Keras. Se especifican cuatro argumentos:
+
+x_train: Este es el conjunto de datos de entrenamiento de entrada.
+
+y_train: Este es el conjunto de datos de entrenamiento de salida esperada.
+
+batch_size: Este es el número de muestras que se utilizarán en cada iteración del algoritmo de optimización. En este caso, se utiliza un tamaño de lote de 64.
+
+epochs: Este es el número de épocas (iteraciones completas a través del conjunto de datos de entrenamiento) que se utilizarán para entrenar el modelo. En este caso, se utiliza un número de épocas de 10.
+
+validation_split: Este argumento especifica la proporción de los datos de entrenamiento que se utilizarán como conjunto de validación. En este caso, se utiliza una proporción del 10%, lo que significa que el 10% de los datos de entrenamiento se utilizarán para la validación durante el entrenamiento.
+
+Este código entrena el modelo utilizando el conjunto de datos de entrenamiento y validación, con un tamaño de lote de 64, 10 épocas de entrenamiento y una proporción del 10% de los datos de entrenamiento utilizados para la validación.
+
+# Evaluamos el modelo en el conjunto de prueba
+
+```
+test_loss, test_acc = model.evaluate(x_test, y_test)
+print("Test accuracy:", test_acc)
+```
+
+El código evalúa el modelo previamente entrenado utilizando el conjunto de datos de prueba utilizando el método evaluate de Keras. Se almacenan los resultados de la evaluación en las variables test_loss y test_acc.
+
+x_test: Este es el conjunto de datos de prueba de entrada.
+
+y_test: Este es el conjunto de datos de prueba de salida esperada.
+
+El método evaluate calcula la función de pérdida y las métricas especificadas durante la compilación del modelo en el conjunto de datos de prueba y devuelve los resultados de la evaluación.
+
+Finalmente, se imprime el valor de la precisión (accuracy) del modelo en el conjunto de datos de prueba utilizando la variable test_acc.
+Este código evalúa el modelo en el conjunto de datos de prueba y muestra la precisión obtenida en el mismo.
+
+# Predicciones 
+
+```
+predictions = model.predict(x_test)
+```
+
+El código utiliza el modelo previamente entrenado para hacer predicciones sobre el conjunto de datos de prueba utilizando el método predict de Keras. Se almacena el resultado de las predicciones en la variable predictions.
+
+x_test: Este es el conjunto de datos de prueba de entrada.
+
+El método predict toma el conjunto de datos de prueba de entrada y devuelve las predicciones de salida correspondientes generadas por el modelo entrenado. En este caso, se utilizó el modelo de clasificación de imágenes para predecir las clases de las imágenes en el conjunto de datos de prueba.
+
+Este código utiliza el modelo previamente entrenado para hacer predicciones sobre el conjunto de datos de prueba y almacena los resultados en la variable predictions.
+
+# Clasificacion de prendas y visualización de prendas erroneas  
+
+```
+    import matplotlib.pyplot as plt
+n=0
+for i in range(25):
+    predicted_label = np.argmax(predictions[i])
+    true_label = np.argmax( y_test[i])
+    if true_label != predicted_label:
+        plt.figure(figsize=(10,10))
+        n=n+1
+        plt.subplot(5,5,n)
+        plt.grid(False)
+        plt.xticks([])
+        plt.yticks([])
+        plt.title(f"prenpred: {tipoprenda.get(predicted_label)} prenreal: {tipoprenda.get(true_label)} ")
+        plt.imshow(x_test[i], cmap=plt.cm.binary)
+        plt.tight_layout()
+        plt.show()
+```
+
+El código muestra visualmente algunas de las predicciones erróneas que hizo el modelo. Se utiliza la biblioteca Matplotlib para crear una cuadrícula de imágenes, donde cada imagen es una predicción errónea.
+
+n: Esta variable se utiliza para contar el número de predicciones erróneas que se muestran.
+
+predicted_label: Esta variable almacena la etiqueta predicha para la imagen actual en el bucle.
+
+true_label: Esta variable almacena la etiqueta verdadera para la imagen actual en el bucle.
+
+plt.figure(): Este método crea una nueva figura de tamaño 10x10 para mostrar las imágenes de las predicciones erróneas.
+
+plt.subplot(): Este método crea una subtrama dentro de la figura, donde se mostrará una imagen. La función tight_layout() se utiliza para ajustar la disposición de las subtramas en la figura.
+
+plt.grid(): Este método desactiva las líneas de la cuadrícula en la imagen.
+
+plt.xticks() y plt.yticks(): Estos métodos desactivan las etiquetas de los ejes x e y en la imagen.
+
+plt.title(): Este método agrega un título a la imagen que muestra la prenda real y la prenda predicha por el modelo.
+
+plt.imshow(): Este método muestra la imagen actual en la subtrama actual.
+
+Este código muestra visualmente algunas de las predicciones erróneas que hizo el modelo, junto con la prenda real y la prenda predicha por el modelo. Se utiliza la biblioteca Matplotlib para crear una cuadrícula de imágenes para mostrar las predicciones erróneas.
